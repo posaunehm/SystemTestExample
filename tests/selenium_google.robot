@@ -1,12 +1,15 @@
 *** Settings ***
-
 Library  Selenium2Library
+
+# テストごとにブラウザを開く
+Test Setup  create webdriver  Chrome
+
+# テストごとにブラウザを閉じてキャッシュをリセットする
+Test Teardown  close all browsers
 
 
 *** Keywords ***
-GoogleでPythonを検索してスクリーンショットを撮り、結果を出力する
-    create webdriver  Chrome
-
+Googleで${input_value}と検索してスクリーンショットを撮り、結果を出力する
     # Googleのトップ画面を開く
     go to  https://www.google.co.jp/
 
@@ -15,7 +18,7 @@ GoogleでPythonを検索してスクリーンショットを撮り、結果を�
     should contain  ${page_title}  Google
 
     # 検索後を入力して送信する
-    input text  name=q  Python
+    input text  name=q  ${input_value}
     # Robot FrameworkではEnterキーは\\13になる
     # https://github.com/robotframework/Selenium2Library/issues/4
     press key  name=q  \\13
@@ -26,10 +29,10 @@ GoogleでPythonを検索してスクリーンショットを撮り、結果を�
 
     # タイトルにPythonが含まれていることを確認する
     ${result_title} =  get title
-    should contain  ${result_title}  Python
+    should contain  ${result_title}  ${input_value}
 
     # スクリーンショットを撮る
-    capture page screenshot  filename=result_google_python.png
+    capture page screenshot  filename=result_google_${input_value}.png
 
     # ログを見やすくするために改行を入れる
     log to console  ${SPACE}
@@ -43,15 +46,15 @@ GoogleでPythonを検索してスクリーンショットを撮り、結果を�
     \  ${href} =  call method  ${web_element}  get_attribute  href
     \  log to console  ${href}
 
-    # ブラウザを終了する
-    close browser
-
 
 *** TestCases ***
 
-GoogleでPythonを検索するテスト
-    GoogleでPythonを検索してスクリーンショットを撮り、結果を出力する
-
+Googleで検索するテスト
+    [Template]  Googleで${input_value}と検索してスクリーンショットを撮り、結果を出力する
+    Python
+    Ruby
+    Java
+    PHP
 
 
 
