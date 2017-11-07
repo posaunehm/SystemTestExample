@@ -40,12 +40,12 @@ Yahoo Japanで${input_value}と検索してスクリーンショットを撮り�
     # 検索結果を表示する
 
     # ForでElementを回したかったことから、WebElementを取得し、そのAPIを利用する
-#    @{web_elements} =  get webelements  css=h3 > a
-#    :for  ${web_element}  in  @{web_elements}
-#    \  ${text} =  get text  ${web_element}
-#    \  log to console  ${text}
-#    \  ${href} =  call method  ${web_element}  get_attribute  href
-#    \  log to console  ${href}
+    @{web_elements} =  get webelements  css=h3 > a
+    :for  ${web_element}  in  @{web_elements}
+    \  ${text} =  get text  ${web_element}
+    \  log to console  ${text}
+    \  ${href} =  call method  ${web_element}  get_attribute  href
+    \  log to console  ${href}
 
 Googleで${input_value}と検索してスクリーンショットを撮り、結果を出力する
     # Googleのトップ画面を開く
