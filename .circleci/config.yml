@@ -1,0 +1,10 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     - run: mkdir /tmp/artifacts
+     - run: docker run -v /tmp/artifacts:/opt/robotframework/reports:Z -v $(pwd)/tests:/opt/robotframework/tests:Z -e LANG=ja_JP.UTF-8 posaunehm/robot-docker:latest
+     - store_artifacts:
+         path: /tmp/artifacts
